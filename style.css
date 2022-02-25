@@ -1,0 +1,112 @@
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.closeRemoveBox {
+    margin: 10px;
+
+    border: 2px dotted black;
+    border-radius: 15px;
+
+    padding: 15px;
+
+    width: 50%;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#closeHeader, .removeHeader {
+    margin-bottom: 0.25em;
+    border-bottom: 1px dashed black;
+    padding-bottom: 0.5em;
+}
+
+#closeTime, #openingTime, .removeTime, .msgTime {
+    font-size: 0.75em;
+}
+
+#openingMsg {
+    margin: 10px;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    background: rgb(219, 219, 219);
+    width: 75%;
+    display: flex;
+    flex-flow: row;
+    gap: 15px;
+}
+
+#openingInfo > h2 {
+    margin: 0;
+}
+
+.kudosCount {
+    position: absolute;
+    display: inline-block;
+    left: 57%;
+    font-weight: bold;
+}
+
+#openingInfo > .kudosCount {
+    left: 71.5%
+}
+
+#threadOpener, .msgPoster {
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.threadMsg {
+    margin: 10px 10px 10px 50px;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    background: rgb(219, 219, 219);
+    width: 60%;
+    display: flex;
+    gap: 15px;
+    flex-flow: column;
+}
+
+.threadMsg > .msgInfo {
+    display: flex;
+    gap: 15px;
+}
+
+.threadMsg > .closeRemoveBox {
+    margin: 0;
+    width: 75%;
+}
+
+.buttons {
+    border: 1px solid #ccc;
+
+    padding: 6px 12px;
+
+    background: white;
+    display: inline-block;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+
+    cursor: pointer;
+}
+
+.buttons:hover {
+    background: #ccc;
+}
+
+#wikiForumNames, #threadIDName {
+    margin: 0;
+}
+
+img:not(.pfp) {
+    max-width: 100%;
+    height: auto;
+}
