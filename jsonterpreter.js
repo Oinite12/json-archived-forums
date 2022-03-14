@@ -45,11 +45,23 @@ document.getElementById("JSONterpret").onclick = function (){
 
     if (threadJSON.closingMessage) {
         document.querySelector("#closeBox").style = "display: flex"
-        document.querySelector("#closerPfp").src = threadJSON.closingMessage.avatar;
-        document.querySelector("#closerPfp").alt = threadJSON.closingMessage.closer;
-        document.querySelector("#closeHeader").innerText = "This thread was closed by " + threadJSON.closingMessage.closer + " for the following reason:";
-        document.querySelector("#closeReason").innerText = threadJSON.closingMessage.reason;
-        document.querySelector("#closeTime").innerText = threadJSON.closingMessage.closingTime;
+        if (typeof threadJSON.closingMessage == "object") {
+            document.querySelector("#closerPfp").src = threadJSON.closingMessage.avatar;
+            document.querySelector("#closerPfp").classList.remove("hidden");
+            document.querySelector("#closerPfp").alt = threadJSON.closingMessage.closer;
+            document.querySelector("#closeHeader").innerText = "This thread was closed by " + threadJSON.closingMessage.closer + " for the following reason:";
+            document.querySelector("#closeHeader").classList.remove("hidden");
+            document.querySelector("#closeReason").innerText = threadJSON.closingMessage.reason;
+            document.querySelector("#closeReason").classList.remove("hidden");
+            document.querySelector("#closeTime").innerText = threadJSON.closingMessage.closingTime;
+            document.querySelector("#closeTime").classList.remove("hidden");
+        } else if (typeof threadJSON.closingMessage == "string") {
+            document.querySelector("#closerPfp").classList.add("hidden");
+            document.querySelector("#closeHeader").innerText = "This discussion post was locked.";
+            document.querySelector("#closeHeader").classList.add("hidden");
+            document.querySelector("#closeReason").classList.add("hidden");
+            document.querySelector("#closeTime").classList.add("hidden");
+        }
     } else document.querySelector("#closeBox").style = "display: none";
 
     var openingMessage = document.querySelector("#openingMsg");
@@ -60,6 +72,9 @@ document.getElementById("JSONterpret").onclick = function (){
     openingMessage.querySelector("#threadName").innerText = threadJSON.threadName;
     openingMessage.querySelector("#threadOpener").innerText = threadJSON.messages[0].poster;
     openingMessage.querySelector("#openingText").innerHTML = threadJSON.messages[0].post;
+    if (/<\/?[a-z][\s\S]*>/i.test(threadJSON.messages[i].post) == false) {
+        openingMessage.querySelector("#openingText").classList.add("simple");
+    };
     if (threadJSON.messages[0].editor) {
         openingMessage.querySelector("#openingTime").innerText = "Edited by " + threadJSON.messages[0].editor + " at " + threadJSON.messages[0].timePosted;
     } else openingMessage.querySelector("#openingTime").innerText = threadJSON.messages[0].timePosted;
@@ -70,7 +85,8 @@ document.getElementById("JSONterpret").onclick = function (){
         threadMessage.setAttribute("data-msgID", i+1);
         document.querySelector("#thread").appendChild(threadMessage);
 
-        if (threadJSON.messages[i].remover.reason) {
+        if (threadJSON.messages[i].remover) {
+            if (threadJSON.messages[i].remover.reason) {
             var removeBox = document.createElement("div");
             removeBox.setAttribute("class", "closeRemoveBox");
             threadMessage.appendChild(removeBox);
@@ -101,7 +117,8 @@ document.getElementById("JSONterpret").onclick = function (){
                     removeTime.setAttribute("class", "removeTime");
                     removeTime.innerText = threadJSON.messages[i].remover.closingTime;
                     removeText.appendChild(removeTime);
-        };
+            };
+        }
 
         if (threadJSON.messages[i].post) {
             var messageInfo = document.createElement("div");
@@ -132,6 +149,9 @@ document.getElementById("JSONterpret").onclick = function (){
 
                     var messageText = document.createElement("div");
                     messageText.setAttribute("class", "msgText");
+                    if (/<\/?[a-z][\s\S]*>/i.test(threadJSON.messages[i].post) == false) {
+                        messageText.classList.add("simple");
+                    };
                     messageText.innerHTML = threadJSON.messages[i].post;
                     messageContent.appendChild(messageText);
 
@@ -145,27 +165,3 @@ document.getElementById("JSONterpret").onclick = function (){
     }
     document.querySelector("#status").innerText = "Status: JSONterpreted!";
 }
-// This is a template of a typical thread message
-/**
-<div class="threadMsg" data-msgID="#">
-    <div class="closeRemoveBox">
-        <img class="pfp" src="[avatar]" width="30" height="30" alt="[user]">
-        <div class="removeText">
-            <div class="removeHeader">This message was removed by [user] for the following reason:</div>
-            <div class="removeReason">[text]</div>
-            <div class="removeTime">[time]</div>
-        </div>
-    </div>
-    <div class="msgInfo">
-        <img class="pfp" src="[avatar]" width="45" height="45" alt="[user]">
-        <div class="msgContent">
-            <div class="kudosCount">[#] kudos</div>
-            <div class="msgPoster">[user]</div>
-            <div class="msgText">
-                [html]
-            </div>
-            <div class="msgTime">Edited by [user] at [time]</div>
-        </div>
-    </div>
-</div>
-**/
