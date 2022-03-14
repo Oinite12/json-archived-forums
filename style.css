@@ -47,7 +47,7 @@ body {
 .kudosCount {
     position: absolute;
     display: inline-block;
-    left: 57%;
+    left: 60%;
     font-weight: bold;
 }
 
@@ -106,7 +106,30 @@ body {
     margin: 0;
 }
 
+.pfp.hidden, #closeReason.hidden, #closeTime.hidden {
+    display: none;
+}
+
+#closeHeader.hidden {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
 img:not(.pfp) {
     max-width: 100%;
     height: auto;
+}
+
+.quote {
+    margin: 10px;
+
+    border: 1px dashed black;
+    border-radius: 15px;
+
+    padding: 15px;
+}
+
+.msgText.simple {
+    margin: 1em 0;
 }
